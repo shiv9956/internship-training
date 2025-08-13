@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head><title>get input values</title></head>
+<body>
+    <input type="text" id="myinput" placeholder="enter some text";>
+    <button onclick="getinputvalue()">Submit</button>
+    <p id="display"></p>
+    <script> 
+        function getinputvalue() {
+            // get value of the input field with id="myinput"
+            var inputValue =document.getElementById("myinput").value;
+
+            // display the value in the paragraph with id="display"
+            document.getElementById("display").innerHTML="you entered: " + inputValue;
+        }
+    </script>
+</body>
+</html>
