@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Interactive Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f5f5f5;
+        }
+
+        .calculator-container {
+            text-align: center;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #numbers, #results {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            width: 300px;
+            background-color: #f1f1f1;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+        }
+    </style>
+    <script>
+        let num1 = null;
+        let num2 = null;
+
+        function updateDisplay() {
+            document.getElementById("numbers").innerHTML = `
+                <strong>First Number:</strong> ${num1 !== null ? num1 : 'Not set'}<br>
+                <strong>Second Number:</strong> ${num2 !== null ? num2 : 'Not set'}
+            `;
+        }
+
+        function setFirstNumber() {
+            let input = prompt("Enter the first number:");
+            if (!isNaN(input) && input.trim() !== "") {
+                num1 = parseFloat(input);
+                updateDisplay();
+            } else {
+                alert("Invalid input. Please enter a valid number.");
+            }
+        }
+
+        function setSecondNumber() {
+            let input = prompt("Enter the second number:");
+            if (!isNaN(input) && input.trim() !== "") {
+                num2 = parseFloat(input);
+                updateDisplay();
+            } else {
+                alert("Invalid input. Please enter a valid number.");
+            }
+        }
+
+        function calculate(operation) {
+            if (num1 === null || num2 === null) {
+                alert("Please set both numbers first.");
+                return;
+            }
+
+            let result;
+            switch (operation) {
+                case "add":
+                    result = num1 + num2;
+                    break;
+                case "subtract":
+                    result = num1 - num2;
+                    break;
+                case "multiply":
+                    result = num1 * num2;
+                    break;
+                case "divide":
+                    result = (num2 !== 0) ? (num1 / num2).toFixed(2) : "Cannot divide by zero";
+                    break;
+                default:
+                    result = "Invalid operation";
+            }
+
+            document.getElementById("results").innerHTML = `
+                <strong>Operation:</strong> ${operation}<br>
+                <strong>Result:</strong> ${result}
+            `;
+        }
+    </script>
+</head>
+<body>
+
+    <div class="calculator-container">
+        <h2>Arithmetic Operations</h2>
+
+        <button onclick="setFirstNumber()">Set First Number</button>
+        <button onclick="setSecondNumber()">Set Second Number</button>
+
+        <div id="numbers">
+            <strong>First Number:</strong> Not set<br>
+            <strong>Second Number:</strong> Not set
+        </div>
+
+        <br>
+
+        <button onclick="calculate('add')">Add</button>
+        <button onclick="calculate('subtract')">Subtract</button>
+        <button onclick="calculate('multiply')">Multiply</button>
+        <button onclick="calculate('divide')">Divide</button>
+
+        <div id="results"></div>
+    </div>
+
+</body>
+</html>

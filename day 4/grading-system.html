@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grading System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f5f5f5;
+        }
+
+        .calculator-container {
+            text-align: center;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #marksDisplay, #results {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            width: 320px;
+            background-color: #f1f1f1;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculator-container">
+        <h2>Grading System</h2>
+
+        <button id="setMarksBtn">Set Marks</button>
+
+        <div id="marksDisplay">
+            <strong>Marks:</strong> Not set
+        </div>
+
+        <br>
+
+        <button id="calculateGradeBtn">Calculate Grade</button>
+
+        <div id="results"></div>
+    </div>
+
+    <script>
+        let marks = null;
+
+        function updateDisplay() {
+            document.getElementById("marksDisplay").innerHTML = `
+                <strong>Marks:</strong> ${marks !== null ? marks : 'Not set'}
+            `;
+        }
+
+        function setMarks() {
+            let m = prompt("Enter marks (0-100):");
+            if (!isNaN(m) && m.trim() !== "" && m >= 0 && m <= 100) {
+                marks = parseFloat(m);
+                updateDisplay();
+            } else {
+                alert("Invalid input. Please enter a number between 0 and 100.");
+            }
+        }
+
+        function calculateGrade() {
+            if (marks === null) {
+                alert("Please set marks first.");
+                return;
+            }
+
+            let grade;
+            if (marks >= 90) grade = "A+";
+            else if (marks >= 80) grade = "A";
+            else if (marks >= 70) grade = "B";
+            else if (marks >= 60) grade = "C";
+            else if (marks >= 50) grade = "D";
+            else grade = "F";
+
+            document.getElementById("results").innerHTML = `
+                <strong>Marks:</strong> ${marks}<br>
+                <strong>Grade:</strong> ${grade}
+            `;
+        }
+
+        // Attach event listeners
+        document.getElementById("setMarksBtn").addEventListener("click", setMarks);
+        document.getElementById("calculateGradeBtn").addEventListener("click", calculateGrade);
+    </script>
+</body>
+</html>

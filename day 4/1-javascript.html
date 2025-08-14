@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <title>document</title>
+    </head>
+    <body>
+        <h2> prompt example</h2>
+        <p id="para"></p>
+        <button onclick="usePrompt()">add name</button>
+        <script>
+            function usePrompt() {
+                    var a =prompt ("what is your name: ");
+                    document.getElementById("para").innerHTML ="Name: " + a;
+
+            }
+        </script>
+    </body>
+</html>

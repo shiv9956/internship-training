@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shape Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f5f5f5;
+        }
+
+        .calculator-container {
+            text-align: center;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            margin: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #dimensions, #results {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            width: 320px;
+            background-color: #f1f1f1;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: left;
+        }
+    </style>
+    <script>
+        let rectLength = null;
+        let rectWidth = null;
+        let squareSide = null;
+        let circleRadius = null;
+
+        function updateDisplay() {
+            document.getElementById("dimensions").innerHTML = `
+                <strong>Rectangle:</strong> Length = ${rectLength !== null ? rectLength : 'Not set'}, Width = ${rectWidth !== null ? rectWidth : 'Not set'}<br>
+                <strong>Square:</strong> Side = ${squareSide !== null ? squareSide : 'Not set'}<br>
+                <strong>Circle:</strong> Radius = ${circleRadius !== null ? circleRadius : 'Not set'}
+            `;
+        }
+
+        function setRectangle() {
+            let l = prompt("Enter rectangle length:");
+            let w = prompt("Enter rectangle width:");
+            if (!isNaN(l) && l.trim() !== "" && !isNaN(w) && w.trim() !== "") {
+                rectLength = parseFloat(l);
+                rectWidth = parseFloat(w);
+                updateDisplay();
+            } else {
+                alert("Invalid input. Please enter valid numbers.");
+            }
+        }
+
+        function setSquare() {
+            let s = prompt("Enter square side length:");
+            if (!isNaN(s) && s.trim() !== "") {
+                squareSide = parseFloat(s);
+                updateDisplay();
+            } else {
+                alert("Invalid input. Please enter a valid number.");
+            }
+        }
+
+        function setCircle() {
+            let r = prompt("Enter circle radius:");
+            if (!isNaN(r) && r.trim() !== "") {
+                circleRadius = parseFloat(r);
+                updateDisplay();
+            } else {
+                alert("Invalid input. Please enter a valid number.");
+            }
+        }
+
+        function calculate(shape, property) {
+            let result;
+            switch (shape) {
+                case "rectangle":
+                    if (rectLength === null || rectWidth === null) {
+                        alert("Please set rectangle dimensions first.");
+                        return;
+                    }
+                    result = property === "area" ? 
+                             rectLength * rectWidth : 
+                             2 * (rectLength + rectWidth);
+                    break;
+
+                case "square":
+                    if (squareSide === null) {
+                        alert("Please set square side first.");
+                        return;
+                    }
+                    result = property === "area" ? 
+                             squareSide * squareSide : 
+                             4 * squareSide;
+                    break;
+
+                case "circle":
+                    if (circleRadius === null) {
+                        alert("Please set circle radius first.");
+                        return;
+                    }
+                    result = property === "area" ? 
+                             (Math.PI * Math.pow(circleRadius, 2)).toFixed(2) : 
+                             (2 * Math.PI * circleRadius).toFixed(2);
+                    break;
+            }
+
+            document.getElementById("results").innerHTML = `
+                <strong>Shape:</strong> ${shape}<br>
+                <strong>Property:</strong> ${property}<br>
+                <strong>Result:</strong> ${result}
+            `;
+        }
+    </script>
+</head>
+<body>
+
+    <div class="calculator-container">
+        <h2>Area & Perimeter Calculator</h2>
+
+        <button onclick="setRectangle()">Set Rectangle Dimensions</button>
+        <button onclick="setSquare()">Set Square Side</button>
+        <button onclick="setCircle()">Set Circle Radius</button>
+
+        <div id="dimensions">
+            <strong>Rectangle:</strong> Length = Not set, Width = Not set<br>
+            <strong>Square:</strong> Side = Not set<br>
+            <strong>Circle:</strong> Radius = Not set
+        </div>
+
+        <br>
+
+        <button onclick="calculate('rectangle','area')">Rectangle Area</button>
+        <button onclick="calculate('rectangle','perimeter')">Rectangle Perimeter</button>
+
+        <button onclick="calculate('square','area')">Square Area</button>
+        <button onclick="calculate('square','perimeter')">Square Perimeter</button>
+
+        <button onclick="calculate('circle','area')">Circle Area</button>
+        <button onclick="calculate('circle','perimeter')">Circle Circumference</button>
+
+        <div id="results"></div>
+    </div>
+
+</body>
+</html>
